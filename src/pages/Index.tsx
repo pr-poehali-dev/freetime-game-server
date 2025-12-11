@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
+import { useToast } from '@/hooks/use-toast';
 
 type Theme = 'theme-dark' | 'theme-bright' | 'theme-green' | 'theme-gamer';
 
@@ -71,6 +73,8 @@ const reviews = [
 function Index() {
   const [theme, setTheme] = useState<Theme>('theme-dark');
   const [activeSection, setActiveSection] = useState('home');
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     document.documentElement.className = theme;
@@ -82,6 +86,14 @@ function Index() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handlePurchase = (productName: string, price: string) => {
+    toast({
+      title: '🎮 Перейдите в Telegram',
+      description: `Для покупки "${productName}" (${price}) перейдите в бота @FreeTimeSRV_bot`,
+    });
+    window.open('https://t.me/FreeTimeSRV_bot', '_blank');
   };
 
   return (
@@ -116,6 +128,12 @@ function Index() {
                   {section === 'contacts' && 'Контакты'}
                 </button>
               ))}
+              <button
+                onClick={() => navigate('/admin')}
+                className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
+              >
+                🔐 Админ
+              </button>
             </nav>
 
             <div className="flex items-center gap-3">
@@ -230,7 +248,10 @@ function Index() {
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-bold">
+                  <Button 
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-bold"
+                    onClick={() => handlePurchase(priv.name, priv.price)}
+                  >
                     <Icon name="Star" className="mr-2" size={16} />
                     Купить через Telegram Stars
                   </Button>
@@ -264,7 +285,10 @@ function Index() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
-                  <Button className="w-full bg-gradient-to-r from-secondary to-accent hover:opacity-90 text-white font-bold">
+                  <Button 
+                    className="w-full bg-gradient-to-r from-secondary to-accent hover:opacity-90 text-white font-bold"
+                    onClick={() => handlePurchase(item.name, item.price)}
+                  >
                     <Icon name="ShoppingCart" className="mr-2" size={16} />
                     Купить
                   </Button>

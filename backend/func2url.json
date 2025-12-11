@@ -1,0 +1,5 @@
+{
+  "generate-token": "https://functions.poehali.dev/682b880b-7d00-47b3-9ace-b2ab869e7f4d",
+  "admin-transactions": "https://functions.poehali.dev/8aff155f-e642-460c-aa34-4a6878d59c38",
+  "validate-token": "https://functions.poehali.dev/35a6a2ab-890e-4eae-a0cf-4b8cb59ccc08"
+}

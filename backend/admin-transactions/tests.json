@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "Get all transactions with admin token",
+      "method": "GET",
+      "path": "/",
+      "headers": {
+        "X-Admin-Token": "admin123"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "transactions": "array",
+        "total": "number"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Unauthorized access without token",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "Unauthorized"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

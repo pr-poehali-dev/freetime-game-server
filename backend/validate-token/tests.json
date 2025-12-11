@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "name": "Validate token with minecraft nick",
+      "method": "GET",
+      "path": "/?token=ABC123XYZ456&minecraft_nick=Steve_Pro",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "valid": true,
+        "product_name": "string",
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing token parameter",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "Token is required"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
